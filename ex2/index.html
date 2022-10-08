@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Bài tập 2</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+		/>
+		<style type="text/css">
+			/* This puts titles always on a separate line from thumbnails */
+			ul img {
+				display: block;
+			}
+		</style>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<h2>Các đoạn phim hay nhất</h2>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-3">
+					<ul>
+						<li>
+							<a
+								href="https://www.youtube.com/watch?v=XfxoTHMqJYk"
+								>Meet the little tiger cubs</a
+							>
+						</li>
+						<li>
+							<a
+								href="https://www.youtube.com/watch?v=epUk3T2Kfno"
+								>Otters Holding Hands</a
+							>
+						</li>
+						<li>
+							<a
+								href="https://www.youtube.com/watch?v=il2IrgFHfsg"
+								>The Ooooh Cat</a
+							>
+						</li>
+					</ul>
+				</div>
+				<div class="col-sm-9" id="video-watcher"></div>
+			</div>
+		</div>
+
+		<script src="youtube.js"></script>
+		<!-- <script>
+			const videoLinks = document.getElementsByTagName("a");
+			for (let i = 0; i < videoLinks.length; i++) {
+				const videoLink = videoLinks[i];
+				const linkUrl = videoLink.getAttribute("href");
+				const thumbnailUrl = youtube.generateThumbnailUrl(linkUrl);
+
+				const thumbnailImg = document.createElement("img");
+				thumbnailImg.setAttribute("src", thumbnailUrl);
+				videoLink.appendChild(thumbnailImg);
+			}
+		</script> -->
+		<script>
+			const thumbnailify = function (videoLink){
+				const linkUrl = videoLink.prop("href");
+				const thumbnailUrl = youtube.generateThumbnailUrl(linkUrl);
+
+				const thumbnailImg = $("<img>");
+				thumbnailImg.prop("src", thumbnailUrl);
+				videoLink.append(thumbnailImg);
+
+				videoLink.on("click", function(e){
+					e.preventDefault();
+
+					const videoEmbed = $("<iframe></iframe>");
+					videoEmbed.prop("src", youtube.generateEmbedUrl(linkUrl));
+					videoEmbed.prop("width", 560);
+					videoEmbed.prop("height", 315);
+
+					const videoWatcher = $("#video-watcher");
+					videoWatcher.html(videoEmbed);
+					videoWatcher.fadeIn();
+				});
+			};
+
+			$("a").each(function() {
+					thumbnailify($(this));
+				});
+		</script>
+	</body>
+</html>
